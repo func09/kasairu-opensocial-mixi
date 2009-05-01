@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+  <ModulePrefs title="kasairu" author_email="mitsuru.haga@gmail.com">
+    <Require feature="opensocial-0.8" />
+    <Require feature="minimessage" />
+  </ModulePrefs>
+  <Content type="html" view="canvas"><![CDATA[
+
+<script type="text/javascript" src="http://localhost:8080/kasairu-mixi/canvas.js"></script>
+
+<script type="text/javascript">
+gadgets.util.registerOnLoadHandler(init);
+</script>
+
+<!-- The code for Canvas view is here. -->
+<div>Canvas view for kasairu.</div>
+
+  ]]></Content>
+</Module>
