@@ -11,8 +11,7 @@
   ==============================================================================
   -->
   <Content type="html" view="home"><![CDATA[
-    <script type="text/javascript" src="js/opensocial-jquery.min.js"></script>
-    <script type="text/javascript" src="js/kasairu.js"></script>
+    <script type="text/javascript" src="http://opensocial-jquery.googlecode.com/svn/tags/1.0.1/features/opensocial-jquery/opensocial-jquery.min.js"></script>
     <p>Home View</p>
     <div>
       あなたが今日傘を持って出かける必要があるのか教える前に、あなたの住んでいる場所を設定しましょう。
@@ -25,8 +24,7 @@
   ==============================================================================
   -->
   <Content type="html" view="profile"><![CDATA[
-    <script type="text/javascript" src="js/opensocial-jquery.min.js"></script>
-    <script type="text/javascript" src="js/kasairu.js"></script>
+    <script type="text/javascript" src="http://opensocial-jquery.googlecode.com/svn/tags/1.0.1/features/opensocial-jquery/opensocial-jquery.min.js"></script>
     <p>Profile View</p>
     <div>
       ○○さんはまだ地域設定をおこなっていません。
@@ -39,8 +37,10 @@
   ==============================================================================
   -->
   <Content type="html" view="canvas"><![CDATA[
-    <script type="text/javascript" src="js/opensocial-jquery.min.js"></script>
-    <script type="text/javascript" src="js/kasairu.js"></script>
+	  <script type="text/javascript" src="http://opensocial-jquery.googlecode.com/svn/tags/1.0.1/features/opensocial-jquery/opensocial-jquery.min.js"></script>
+	  <script type="text/javascript">
+	    alert(jQuery);
+	  </script>
     <p>Canvas View</p>
     <div>
       あなたが今日傘を持って出かける必要があるのか教える前に、あなたの住んでいる場所を設定しましょう。
