@@ -11,6 +11,7 @@
   ==============================================================================
   -->
   <Content type="html" view="home"><![CDATA[
+    <script type="text/javascript" src="js/opensocial-jquery.min.js"></script>
     <script type="text/javascript" src="js/kasairu.js"></script>
     <p>Home View</p>
     <div>
@@ -24,6 +25,7 @@
   ==============================================================================
   -->
   <Content type="html" view="profile"><![CDATA[
+    <script type="text/javascript" src="js/opensocial-jquery.min.js"></script>
     <script type="text/javascript" src="js/kasairu.js"></script>
     <p>Profile View</p>
     <div>
@@ -37,6 +39,7 @@
   ==============================================================================
   -->
   <Content type="html" view="canvas"><![CDATA[
+    <script type="text/javascript" src="js/opensocial-jquery.min.js"></script>
     <script type="text/javascript" src="js/kasairu.js"></script>
     <p>Canvas View</p>
     <div>
