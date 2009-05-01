@@ -5,21 +5,39 @@
     <Require feature="dynamic-height" />
   </ModulePrefs>
   
+  <!--
+  ==============================================================================
+   Home View
+  ==============================================================================
+  -->
   <Content type="html" view="home"><![CDATA[
+    <script type="text/javascript" src="js/kasairu.js"></script>
     <p>Home View</p>
     <div>
       あなたが今日傘を持って出かける必要があるのか教える前に、あなたの住んでいる場所を設定しましょう。
     </div>
   ]]></Content>
   
+  <!--
+  ==============================================================================
+   Profile View
+  ==============================================================================
+  -->
   <Content type="html" view="profile"><![CDATA[
+    <script type="text/javascript" src="js/kasairu.js"></script>
     <p>Profile View</p>
     <div>
       ○○さんはまだ地域設定をおこなっていません。
     </div>
   ]]></Content>
   
+  <!--
+  ==============================================================================
+   Canvas View
+  ==============================================================================
+  -->
   <Content type="html" view="canvas"><![CDATA[
+    <script type="text/javascript" src="js/kasairu.js"></script>
     <p>Canvas View</p>
     <div>
       あなたが今日傘を持って出かける必要があるのか教える前に、あなたの住んでいる場所を設定しましょう。
