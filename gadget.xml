@@ -7,14 +7,23 @@
   
   <Content type="html" view="home"><![CDATA[
     <p>Home View</p>
+    <div>
+      あなたが今日傘を持って出かける必要があるのか教える前に、あなたの住んでいる場所を設定しましょう。
+    </div>
   ]]></Content>
   
   <Content type="html" view="profile"><![CDATA[
     <p>Profile View</p>
+    <div>
+      ○○さんはまだ地域設定をおこなっていません。
+    </div>
   ]]></Content>
   
   <Content type="html" view="canvas"><![CDATA[
     <p>Canvas View</p>
+    <div>
+      あなたが今日傘を持って出かける必要があるのか教える前に、あなたの住んでいる場所を設定しましょう。
+    </div>
   ]]></Content>
   
 </Module>
