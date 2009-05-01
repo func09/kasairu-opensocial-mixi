@@ -39,7 +39,49 @@
   <Content type="html" view="canvas"><![CDATA[
 	  <script type="text/javascript" src="http://opensocial-jquery.googlecode.com/svn/tags/1.0.1/features/opensocial-jquery/opensocial-jquery.min.js"></script>
 	  <script type="text/javascript">
-	    alert(jQuery);
+	  
+	    jQuery(function($){
+	      
+	      var owner = null;
+	      var cityId = null;
+	      
+	      // Ownerの取得
+	      $.ajax({url:'/people/@owner/@self',dataType:'data'})
+	      // Owner取得のコールバック処理
+	      .next(function(people){
+	        owner = people[0];
+	        return $.ajax({
+	          url:'/appdata/@owner/@self',
+	          dataType:'data',
+	          data:{}
+	        });
+	      })
+	      // AppDataの取得
+	      .next(function(appData){
+	        console.log(appData);
+	        $.each(appData,function(userId,data){
+	          cityId = data.cityId;
+	        });
+	        // cityIdが無ければデフォルト値を保存
+	        if (cityId) {
+	          return true;
+	        } else {
+	          return $.ajax({
+	            type:'post',
+	            url:'/appdata/@owner/@self',
+	            data:{cityId:'33'},
+	            dataType:'data'
+	          });
+	        }
+	      })
+	      .next(function(){
+          console.log(owner);
+          console.log(cityId);
+	      })
+	      .error(function(e){
+	        console.error("ERROR");
+	      });
+	    });
 	  </script>
     <p>Canvas View</p>
     <div>
