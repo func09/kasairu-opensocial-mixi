@@ -3,6 +3,7 @@
   <ModulePrefs title="kasairu" author_email="mitusur.haga@gmail.com">
     <Require feature="opensocial-0.8" />
     <Require feature="dynamic-height" />
+    <Require feature="minimessage" />
   </ModulePrefs>
   
   <!--
@@ -37,55 +38,65 @@
   ==============================================================================
   -->
   <Content type="html" view="canvas"><![CDATA[
-	  <script type="text/javascript" src="http://opensocial-jquery.googlecode.com/svn/tags/1.0.1/features/opensocial-jquery/opensocial-jquery.min.js"></script>
-	  <script type="text/javascript">
-	  
-	    jQuery(function($){
-	      
-	      var owner = null;
-	      var cityId = null;
-	      
-	      // Ownerの取得
-	      $.ajax({url:'/people/@owner/@self',dataType:'data'})
-	      // Owner取得のコールバック処理
-	      .next(function(people){
-	        owner = people[0];
-	        return $.ajax({
-	          url:'/appdata/@owner/@self',
-	          dataType:'data',
-	          data:{}
-	        });
-	      })
-	      // AppDataの取得
-	      .next(function(appData){
-	        console.log(appData);
-	        $.each(appData,function(userId,data){
-	          cityId = data.cityId;
-	        });
-	        // cityIdが無ければデフォルト値を保存
-	        if (cityId) {
-	          return true;
-	        } else {
-	          return $.ajax({
-	            type:'post',
-	            url:'/appdata/@owner/@self',
-	            data:{cityId:'33'},
-	            dataType:'data'
-	          });
-	        }
-	      })
-	      .next(function(){
-          console.log(owner);
-          console.log(cityId);
-	      })
-	      .error(function(e){
-	        console.error("ERROR");
-	      });
-	    });
+    <style type="text/css">
+      
+    </style>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script type="text/javascript">
+      
+      var flashMessage;
+      var owner;
+      var ownerAppData;
+      
+      /**
+       * 初期化
+       * アプリのオーナー情報、永続データの取得を行う
+       */
+      function init(){
+        flashMessage = new gadgets.MiniMessage(null,'flash-message');
+        var req = opensocial.newDataRequest();
+        req.add(req.newFetchPersonRequest("OWNER"), "get_owner");
+        req.add(req.newFetchPersonAppDataRequest(opensocial.newIdSpec({"userId":"OWNER"}),["cityId"]),"get_owner_appdata");
+        req.send(handleCompleteInit);
+        
+        // VIEWの設定
+        $('#btn-setting').click(function(){
+          flashMessage.createTimerMessage("Change Setting",2);
+        });
+        
+      }
+      
+      /**
+       * 初期化後のコールバック処理
+       */
+      function handleCompleteInit(response){
+        if (response.hadError()) {
+          console.error(response.getErrorMessage());
+          return;
+        }
+        owner = response.get("get_owner");
+        ownerAppData = response.get("get_owner_appdata");
+        
+        // flashMessage.createTimerMessage("Hello World",2);
+        
+      }
+      
+      gadgets.util.registerOnLoadHandler(init);
+      
 	  </script>
-    <p>Canvas View</p>
+	  
+    <div id="flash-message"></div>
+    
+    <div id="setting" style="">
+      <h3>あなたの地域を設定してください。</h3>
+      <select>
+        <option>aaaa</option>
+      </select>
+      <button id="btn-setting">設定変更</button>
+    </div>
+    
     <div>
-      あなたが今日傘を持って出かける必要があるのか教える前に、あなたの住んでいる場所を設定しましょう。
+      傘を持ってでかけましょう！（東京）
     </div>
   ]]></Content>
   
