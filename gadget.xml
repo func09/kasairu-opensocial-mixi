@@ -70,7 +70,7 @@
           req.send(function(response){
             if(response.hadError()){
               flashMessage.createTimerMessage("地域設定の保存に失敗しました。もう一度やり直してみてください。", 4 );
-              console.error(response);
+              //console.error(response);
             } else {
               flashMessage.createTimerMessage("地域設定を『"+CITIES[cityId]+"』として保存しました。", 2, function(){
                 $('#box-setting-city').fadeOut();
@@ -94,7 +94,7 @@
       function handleCompleteInit(response){
         
         if (response.hadError()) {
-          console.error(response.getErrorMessage());
+          //console.error(response.getErrorMessage());
           return;
         }
         owner = response.get("get_owner").getData();
