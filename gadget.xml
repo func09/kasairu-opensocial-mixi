@@ -60,17 +60,21 @@
         flashMessage = new gadgets.MiniMessage(__MODULE_ID__,'flash-message');
         var req = opensocial.newDataRequest();
         req.add(req.newFetchPersonRequest("OWNER"), "get_owner");
-        req.add(req.newFetchPersonAppDataRequest(opensocial.newIdSpec({"userId":"OWNER"}),["cityId"]),"get_owner_appdata");
+        req.add(req.newFetchPersonAppDataRequest(opensocial.newIdSpec({"userId":"OWNER"}),["city_id"]),"get_owner_appdata");
         req.send(handleCompleteInit);
         
         // VIEWの設定
         $('#btn-setting').click(function(){
           
           var city_id = $('#city-select').attr('value');
+          
           // city_idを永続データストアに保存
-          saveCity(city_id, function(response){
+          var req = opensocial.newDataRequest();
+          req.add(req.newUpdatePersonAppDataRequest("VIEWER", "city_id", Number(city_id)));
+          req.send(function(response){
             if(response.hadError()){
               flashMessage.createTimerMessage("地域設定の保存に失敗しました。もう一度やり直してみてください。", 4 );
+              console.error(response);
             } else {
               flashMessage.createTimerMessage("地域設定を『"+CITIES[city_id]+"』として保存しました。", 2, function(){
                 $('#box-setting-city').fadeOut();
@@ -110,19 +114,12 @@
         
         console.debug( owner );
         
-        // AppDataからcityIdを取得する
-        console.debug(ownerAppData);
-        //cityId = ownerAppData
+        // AppDataからcity_idを取得する
+        cityId = ownerAppData[owner.getField("id")]["city_id"] || DEFAULT_CITY_ID;
+
+        // セレクトメニューのチェック状態を変更する
+        $('#city-select option[value='+cityId+']').attr('selected','selected');
         
-      }
-      
-      /**
-       * cityIdを永続データストアに保存する
-       */
-      function saveCity(cityId, callback){
-        var req = opensocial.newDataRequest();
-        req.add(req.newUpdatePersonAppDataRequest("OWNER","city_id",cityId));
-        req.send(callback);
       }
       
       /**
