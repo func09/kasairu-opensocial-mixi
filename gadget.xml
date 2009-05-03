@@ -108,7 +108,11 @@
         }
         
         // AppDataからcity_idを取得する
-        cityId = ownerAppData[owner.getField("id")]["city_id"] || DEFAULT_CITY_ID;
+        if(ownerAppData[owner.getField("id")] && ownerAppData[owner.getField("id")]["city_id"]) {
+          cityId = ownerAppData[owner.getField("id")]["city_id"];
+        } else {
+          cityId = DEFAULT_CITY_ID;
+        }
 
         // セレクトメニューのチェック状態を変更する
         $('#city-select option[value='+cityId+']').attr('selected','selected');
