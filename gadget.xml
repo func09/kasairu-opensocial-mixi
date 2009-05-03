@@ -92,10 +92,11 @@
           console.error(response.getErrorMessage());
           return;
         }
-        owner = response.get("get_owner");
+        owner = response.get("get_owner").getData();
         ownerAppData = response.get("get_owner_appdata");
         
-        // flashMessage.createTimerMessage("Hello World",2);
+        // Owner == Viewerであるか調べる
+        console.debug( owner );
         
       }
       
