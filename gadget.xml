@@ -108,8 +108,7 @@
         if (owner.isViewer()) {
           isAdmin = true;
         } else {
-          // TODO OSDEだとPerson#isViewer()が常にfalseなバグがあるっぽいので、開発時はコメントアウト
-          // $('#box-setting').remove();
+          $('#box-setting').remove();
         }
         
         console.debug( owner );
