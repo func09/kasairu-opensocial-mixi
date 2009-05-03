@@ -66,17 +66,19 @@
         // VIEWの設定
         $('#btn-setting').click(function(){
           
-          var city_id = $('#city-select').attr('value');
+          cityId = $('#city-select').attr('value');
+          
+          fetchWeatherData(cityId);
           
           // city_idを永続データストアに保存
           var req = opensocial.newDataRequest();
-          req.add(req.newUpdatePersonAppDataRequest("VIEWER", "city_id", Number(city_id)));
+          req.add(req.newUpdatePersonAppDataRequest("VIEWER", "city_id", Number(cityId)));
           req.send(function(response){
             if(response.hadError()){
               flashMessage.createTimerMessage("地域設定の保存に失敗しました。もう一度やり直してみてください。", 4 );
               console.error(response);
             } else {
-              flashMessage.createTimerMessage("地域設定を『"+CITIES[city_id]+"』として保存しました。", 2, function(){
+              flashMessage.createTimerMessage("地域設定を『"+CITIES[cityId]+"』として保存しました。", 2, function(){
                 $('#box-setting-city').fadeOut();
                 return true;
               });
@@ -111,13 +113,14 @@
           $('#box-setting').remove();
         }
         
-        console.debug( owner );
-        
         // AppDataからcity_idを取得する
         cityId = ownerAppData[owner.getField("id")]["city_id"] || DEFAULT_CITY_ID;
 
         // セレクトメニューのチェック状態を変更する
         $('#city-select option[value='+cityId+']').attr('selected','selected');
+
+        // お天気情報の取得
+        fetchWeatherData(cityId);
         
       }
       
@@ -128,8 +131,22 @@
         var params = {};
         params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.TEXT;
         gadgets.io.makeRequest('http://weather.livedoor.com/forecast/webservice/rest/v1?city='+cityId+'&day=today', function(d){
-          var bool = /雨/.test($('telop',d.text).text());
-          callback.apply(this,[bool]);
+          if (d.errors.length == 0) {
+            var bool = /雨/.test($('telop',d.text).text());
+          } else {
+            flashMessage.createTimerMessage("お天気情報の取得に失敗しました。しばらくしてからもう一度お試しください。", 4 );
+            throw new Error();
+          }
+          
+          // VIEWの変更
+          $(".city-name").text(CITIES[cityId]);
+          if (bool) {
+            $("#result-yes").show();
+            $("#result-no").hide();
+          } else {
+            $("#result-yes").hide();
+            $("#result-no").show();
+          }
         }, params);
       }
       
@@ -138,15 +155,16 @@
     </script>
     
     <div id="flash-message"></div>
-    
-    <div>
-      傘を持ってでかけましょう！（東京）
+    <h3>今日、傘いる？</h3>    
+    <div id="box-result">
+      <p id="result-yes" style="display:none;">はい！傘を持ってでかけましょう！（<span class="city-name">東京</span>）</p>
+      <p id="result-no" style="display:none;">いいえ！傘は必要ないでしょう（<span class="city-name">東京</span>）</p>
     </div>
     
     <div id="box-setting" style="">
       <p"><a id="toggle-setting-city" href="#">地域設定変更</a></p>
       <div id="box-setting-city" style="display:none;">
-        <h3>あなたの地域を設定してください。</h3>
+        <h4>あなたの地域を設定してください。</h4>
         <select id="city-select">
           <optgroup label="北海道">
             <option value="1">稚内</option>
