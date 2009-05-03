@@ -72,10 +72,10 @@
             if(response.hadError()){
               flashMessage.createTimerMessage("地域設定の保存に失敗しました。もう一度やり直してみてください。", 4 );
             } else {
-	            flashMessage.createTimerMessage("地域設定を『"+CITIES[city_id]+"』として保存しました。", 2, function(){
-	              $('#box-setting-city').fadeOut();
-	              return true;
-	            });
+              flashMessage.createTimerMessage("地域設定を『"+CITIES[city_id]+"』として保存しました。", 2, function(){
+                $('#box-setting-city').fadeOut();
+                return true;
+              });
             }
           });
           
@@ -129,18 +129,18 @@
        * WatherHacksにアクセスして、お天気データを取得する
        */
       function fetchWeatherData(cityId,callback) {
-		    var params = {};
-		    params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.TEXT;
-		    gadgets.io.makeRequest('http://weather.livedoor.com/forecast/webservice/rest/v1?city='+cityId+'&day=today', function(d){
-		      var bool = /雨/.test($('telop',d.text).text());
-		      callback.apply(this,[bool]);
-		    }, params);
+        var params = {};
+        params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.TEXT;
+        gadgets.io.makeRequest('http://weather.livedoor.com/forecast/webservice/rest/v1?city='+cityId+'&day=today', function(d){
+          var bool = /雨/.test($('telop',d.text).text());
+          callback.apply(this,[bool]);
+        }, params);
       }
       
       gadgets.util.registerOnLoadHandler(init);
       
-	  </script>
-	  
+    </script>
+    
     <div id="flash-message"></div>
     
     <div>
