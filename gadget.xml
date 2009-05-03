@@ -47,7 +47,9 @@
       var flashMessage;
       var owner;
       var ownerAppData;
+      var isAdmin = false; // アプリのオーナーが閲覧している時
       var DEFAULT_CITY_ID = 63; // デフォルトの街ID（東京）
+      var CITIES = {'1':'稚内','2':'旭川','3':'留萌','4':'札幌','5':'岩見沢','6':'倶知安','7':'網走','8':'北見','9':'紋別','10':'根室','11':'釧路','12':'帯広','13':'室蘭','14':'浦河','15':'函館','16':'江差','17':'青森','18':'むつ','19':'八戸','20':'秋田','21':'横手','22':'盛岡','23':'宮古','24':'大船渡','25':'仙台','26':'白石','27':'山形','28':'米沢','29':'酒田','30':'新庄','31':'福島','32':'小名浜','33':'若松','34':'静岡','35':'網代','36':'三島','37':'浜松','38':'名古屋','39':'豊橋','40':'岐阜','41':'高山','42':'津','43':'尾鷲','44':'富山','45':'伏木','46':'金沢','47':'輪島','48':'福井','49':'敦賀','50':'新潟','51':'長岡','52':'高田','53':'相川','54':'水戸','55':'土浦','56':'宇都宮','57':'大田原','58':'前橋','59':'みなかみ','60':'さいたま','61':'熊谷','62':'秩父','63':'東京','64':'大島','65':'八丈島','66':'父島','67':'千葉','68':'銚子','69':'館山','70':'横浜','71':'小田原','72':'長野','73':'松本','74':'飯田','75':'甲府','76':'河口湖','77':'大津','78':'彦根','79':'京都','80':'舞鶴','81':'大阪','82':'神戸','83':'豊岡','84':'奈良','85':'風屋','86':'和歌山','87':'潮岬','88':'岡山','89':'津山','90':'広島','91':'庄原','92':'松江','93':'浜田','94':'西郷','95':'鳥取','96':'米子','97':'下関','98':'山口','99':'柳井','100':'萩','101':'徳島','102':'日和佐','103':'高松','104':'松山','105':'新居浜','106':'宇和島','107':'高知','108':'室戸','109':'清水','110':'福岡','111':'八幡','112':'飯塚','113':'久留米','114':'大分','115':'中津','116':'日田','117':'佐伯','118':'長崎','119':'佐世保','120':'厳原','121':'福江','122':'佐賀','123':'伊万里','124':'熊本','125':'阿蘇乙姫','126':'牛深','127':'人吉','128':'宮崎','129':'延岡','130':'都城','131':'高千穂','132':'鹿児島','133':'鹿屋','134':'種子島','135':'名瀬','136':'那覇','137':'名護','138':'久米島','139':'南大東島','140':'宮古島','141':'石垣島','142':'与那国島'};
       
       /**
        * 初期化
@@ -69,8 +71,8 @@
             if(response.hadError()){
               flashMessage.createTimerMessage("地域設定の保存に失敗しました。もう一度やり直してみてください。", 4 );
             } else {
-	            flashMessage.createTimerMessage("地域設定を"+city_id+"として保存しました。", 2, function(){
-	              $('#box-setting').fadeOut();
+	            flashMessage.createTimerMessage("地域設定を『"+CITIES[city_id]+"』として保存しました。", 2, function(){
+	              $('#box-setting-city').fadeOut();
 	              return true;
 	            });
             }
@@ -78,16 +80,18 @@
           
         });
         
-        $('#toggle-city-setting').click(function(){
-          $('#box-setting').toggle();
+        $('#toggle-setting-city').click(function(){
+          $('#box-setting-city').toggle();
         });
         
       }
       
       /**
        * 初期化後のコールバック処理
+       * VIEWの設定など
        */
       function handleCompleteInit(response){
+        
         if (response.hadError()) {
           console.error(response.getErrorMessage());
           return;
@@ -96,6 +100,13 @@
         ownerAppData = response.get("get_owner_appdata");
         
         // Owner == Viewerであるか調べる
+        if (owner.isViewer()) {
+          isAdmin = true;
+        } else {
+          // TODO OSDEだとPerson#isViewer()が常にfalseなバグがあるっぽいので、開発時はコメントアウト
+          // $('#box-setting').remove();
+        }
+        
         console.debug( owner );
         
       }
@@ -119,173 +130,174 @@
       傘を持ってでかけましょう！（東京）
     </div>
     
-    <p><a id="toggle-city-setting" href="#">地域設定変更</a></p>
-    
-    <div id="box-setting" style="display:none;">
-      <h3>あなたの地域を設定してください。</h3>
-	    <select id="city-select">
-	      <optgroup label="北海道">
-	        <option value="1">稚内</option>
-	        <option value="2">旭川</option>
-	        <option value="3">留萌</option>
-	        <option value="4">札幌</option>
-	        <option value="5">岩見沢</option>
-	        <option value="6">倶知安</option>
-	        <option value="7">網走</option>
-	        <option value="8">北見</option>
-	        <option value="9">紋別</option>
-	        <option value="10">根室</option>
-	        <option value="11">釧路</option>
-	        <option value="12">帯広</option>
-	        <option value="13">室蘭</option>
-	        <option value="14">浦河</option>
-	        <option value="15">函館</option>
-	        <option value="16">江差</option>
-	      </optgroup>
-	      <optgroup label="東北">
-	        <option value="17">青森</option>
-	        <option value="18">むつ</option>
-	        <option value="19">八戸</option>
-	        <option value="20">秋田</option>
-	        <option value="21">横手</option>
-	        <option value="22">盛岡</option>
-	        <option value="23">宮古</option>
-	        <option value="24">大船渡</option>
-	        <option value="25">仙台</option>
-	        <option value="26">白石</option>
-	        <option value="27">山形</option>
-	        <option value="28">米沢</option>
-	        <option value="29">酒田</option>
-	        <option value="30">新庄</option>
-	        <option value="31">福島</option>
-	        <option value="32">小名浜</option>
-	        <option value="33">若松</option>
-	      </optgroup>
-	      <optgroup label="信越・北陸">
-	        <option value="44">富山</option>
-	        <option value="45">伏木</option>
-	        <option value="46">金沢</option>
-	        <option value="47">輪島</option>
-	        <option value="48">福井</option>
-	        <option value="49">敦賀</option>
-	        <option value="50">新潟</option>
-	        <option value="51">長岡</option>
-	        <option value="52">高田</option>
-	        <option value="53">相川</option>
-	        <option value="72">長野</option>
-	        <option value="73">松本</option>
-	        <option value="74">飯田</option>
-	      </optgroup>
-	      <optgroup label="関東">
-	        <option value="54">水戸</option>
-	        <option value="55">土浦</option>
-	        <option value="56">宇都宮</option>
-	        <option value="57">大田原</option>
-	        <option value="58">前橋</option>
-	        <option value="59">みなかみ</option>
-	        <option value="60">さいたま</option>
-	        <option value="61">熊谷</option>
-	        <option value="62">秩父</option>
-	        <option value="63">東京</option>
-	        <option value="64">大島</option>
-	        <option value="65">八丈島</option>
-	        <option value="66">父島</option>
-	        <option value="67">千葉</option>
-	        <option value="68">銚子</option>
-	        <option value="69">館山</option>
-	        <option value="70">横浜</option>
-	        <option value="71">小田原</option>
-	        <option value="75">甲府</option>
-	        <option value="76">河口湖</option>
-	      </optgroup>
-	      <optgroup label="東海">
-	        <option value="34">静岡</option>
-	        <option value="35">網代</option>
-	        <option value="36">三島</option>
-	        <option value="37">浜松</option>
-	        <option value="38">名古屋</option>
-	        <option value="39">豊橋</option>
-	        <option value="40">岐阜</option>
-	        <option value="41">高山</option>
-	        <option value="42">津</option>
-	        <option value="43">尾鷲</option>
-	      </optgroup>
-	      <optgroup label="近畿">
-	        <option value="77">大津</option>
-	        <option value="78">彦根</option>
-	        <option value="79">京都</option>
-	        <option value="80">舞鶴</option>
-	        <option value="81">大阪</option>
-	        <option value="82">神戸</option>
-	        <option value="83">豊岡</option>
-	        <option value="84">奈良</option>
-	        <option value="85">風屋</option>
-	        <option value="86">和歌山</option>
-	        <option value="87">潮岬</option>
-	      </optgroup>
-	      <optgroup label="中国">
-	        <option value="88">岡山</option>
-	        <option value="89">津山</option>
-	        <option value="90">広島</option>
-	        <option value="91">庄原</option>
-	        <option value="92">松江</option>
-	        <option value="93">浜田</option>
-	        <option value="94">西郷</option>
-	        <option value="95">鳥取</option>
-	        <option value="96">米子</option>
-	        <option value="97">下関</option>
-	        <option value="98">山口</option>
-	        <option value="99">柳井</option>
-	        <option value="100">萩</option>
-	      </optgroup>
-	      <optgroup label="四国">
-	        <option value="101">徳島</option>
-	        <option value="102">日和佐</option>
-	        <option value="103">高松</option>
-	        <option value="104">松山</option>
-	        <option value="105">新居浜</option>
-	        <option value="106">宇和島</option>
-	        <option value="107">高知</option>
-	        <option value="108">室戸</option>
-	        <option value="109">清水</option>
-	      </optgroup>
-	      <optgroup label="九州・沖縄">
-	        <option value="110">福岡</option>
-	        <option value="111">八幡</option>
-	        <option value="112">飯塚</option>
-	        <option value="113">久留米</option>
-	        <option value="114">大分</option>
-	        <option value="115">中津</option>
-	        <option value="116">日田</option>
-	        <option value="117">佐伯</option>
-	        <option value="118">長崎</option>
-	        <option value="119">佐世保</option>
-	        <option value="120">厳原</option>
-	        <option value="121">福江</option>
-	        <option value="122">佐賀</option>
-	        <option value="123">伊万里</option>
-	        <option value="124">熊本</option>
-	        <option value="125">阿蘇乙姫</option>
-	        <option value="126">牛深</option>
-	        <option value="127">人吉</option>
-	        <option value="128">宮崎</option>
-	        <option value="129">延岡</option>
-	        <option value="130">都城</option>
-	        <option value="131">高千穂</option>
-	        <option value="132">鹿児島</option>
-	        <option value="133">鹿屋</option>
-	        <option value="134">種子島</option>
-	        <option value="135">名瀬</option>
-	        <option value="136">那覇</option>
-	        <option value="137">名護</option>
-	        <option value="138">久米島</option>
-	        <option value="139">南大東島</option>
-	        <option value="140">宮古島</option>
-	        <option value="141">石垣島</option>
-	        <option value="142">与那国島</option>
-	      </optgroup>
-	    </select>
-      <button id="btn-setting">設定変更</button>
+    <div id="box-setting" style="">
+      <p"><a id="toggle-setting-city" href="#">地域設定変更</a></p>
+      <div id="box-setting-city" style="display:none;">
+        <h3>あなたの地域を設定してください。</h3>
+        <select id="city-select">
+          <optgroup label="北海道">
+            <option value="1">稚内</option>
+            <option value="2">旭川</option>
+            <option value="3">留萌</option>
+            <option value="4">札幌</option>
+            <option value="5">岩見沢</option>
+            <option value="6">倶知安</option>
+            <option value="7">網走</option>
+            <option value="8">北見</option>
+            <option value="9">紋別</option>
+            <option value="10">根室</option>
+            <option value="11">釧路</option>
+            <option value="12">帯広</option>
+            <option value="13">室蘭</option>
+            <option value="14">浦河</option>
+            <option value="15">函館</option>
+            <option value="16">江差</option>
+          </optgroup>
+          <optgroup label="東北">
+            <option value="17">青森</option>
+            <option value="18">むつ</option>
+            <option value="19">八戸</option>
+            <option value="20">秋田</option>
+            <option value="21">横手</option>
+            <option value="22">盛岡</option>
+            <option value="23">宮古</option>
+            <option value="24">大船渡</option>
+            <option value="25">仙台</option>
+            <option value="26">白石</option>
+            <option value="27">山形</option>
+            <option value="28">米沢</option>
+            <option value="29">酒田</option>
+            <option value="30">新庄</option>
+            <option value="31">福島</option>
+            <option value="32">小名浜</option>
+            <option value="33">若松</option>
+          </optgroup>
+          <optgroup label="信越・北陸">
+            <option value="44">富山</option>
+            <option value="45">伏木</option>
+            <option value="46">金沢</option>
+            <option value="47">輪島</option>
+            <option value="48">福井</option>
+            <option value="49">敦賀</option>
+            <option value="50">新潟</option>
+            <option value="51">長岡</option>
+            <option value="52">高田</option>
+            <option value="53">相川</option>
+            <option value="72">長野</option>
+            <option value="73">松本</option>
+            <option value="74">飯田</option>
+          </optgroup>
+          <optgroup label="関東">
+            <option value="54">水戸</option>
+            <option value="55">土浦</option>
+            <option value="56">宇都宮</option>
+            <option value="57">大田原</option>
+            <option value="58">前橋</option>
+            <option value="59">みなかみ</option>
+            <option value="60">さいたま</option>
+            <option value="61">熊谷</option>
+            <option value="62">秩父</option>
+            <option value="63">東京</option>
+            <option value="64">大島</option>
+            <option value="65">八丈島</option>
+            <option value="66">父島</option>
+            <option value="67">千葉</option>
+            <option value="68">銚子</option>
+            <option value="69">館山</option>
+            <option value="70">横浜</option>
+            <option value="71">小田原</option>
+            <option value="75">甲府</option>
+            <option value="76">河口湖</option>
+          </optgroup>
+          <optgroup label="東海">
+            <option value="34">静岡</option>
+            <option value="35">網代</option>
+            <option value="36">三島</option>
+            <option value="37">浜松</option>
+            <option value="38">名古屋</option>
+            <option value="39">豊橋</option>
+            <option value="40">岐阜</option>
+            <option value="41">高山</option>
+            <option value="42">津</option>
+            <option value="43">尾鷲</option>
+          </optgroup>
+          <optgroup label="近畿">
+            <option value="77">大津</option>
+            <option value="78">彦根</option>
+            <option value="79">京都</option>
+            <option value="80">舞鶴</option>
+            <option value="81">大阪</option>
+            <option value="82">神戸</option>
+            <option value="83">豊岡</option>
+            <option value="84">奈良</option>
+            <option value="85">風屋</option>
+            <option value="86">和歌山</option>
+            <option value="87">潮岬</option>
+          </optgroup>
+          <optgroup label="中国">
+            <option value="88">岡山</option>
+            <option value="89">津山</option>
+            <option value="90">広島</option>
+            <option value="91">庄原</option>
+            <option value="92">松江</option>
+            <option value="93">浜田</option>
+            <option value="94">西郷</option>
+            <option value="95">鳥取</option>
+            <option value="96">米子</option>
+            <option value="97">下関</option>
+            <option value="98">山口</option>
+            <option value="99">柳井</option>
+            <option value="100">萩</option>
+          </optgroup>
+          <optgroup label="四国">
+            <option value="101">徳島</option>
+            <option value="102">日和佐</option>
+            <option value="103">高松</option>
+            <option value="104">松山</option>
+            <option value="105">新居浜</option>
+            <option value="106">宇和島</option>
+            <option value="107">高知</option>
+            <option value="108">室戸</option>
+            <option value="109">清水</option>
+          </optgroup>
+          <optgroup label="九州・沖縄">
+            <option value="110">福岡</option>
+            <option value="111">八幡</option>
+            <option value="112">飯塚</option>
+            <option value="113">久留米</option>
+            <option value="114">大分</option>
+            <option value="115">中津</option>
+            <option value="116">日田</option>
+            <option value="117">佐伯</option>
+            <option value="118">長崎</option>
+            <option value="119">佐世保</option>
+            <option value="120">厳原</option>
+            <option value="121">福江</option>
+            <option value="122">佐賀</option>
+            <option value="123">伊万里</option>
+            <option value="124">熊本</option>
+            <option value="125">阿蘇乙姫</option>
+            <option value="126">牛深</option>
+            <option value="127">人吉</option>
+            <option value="128">宮崎</option>
+            <option value="129">延岡</option>
+            <option value="130">都城</option>
+            <option value="131">高千穂</option>
+            <option value="132">鹿児島</option>
+            <option value="133">鹿屋</option>
+            <option value="134">種子島</option>
+            <option value="135">名瀬</option>
+            <option value="136">那覇</option>
+            <option value="137">名護</option>
+            <option value="138">久米島</option>
+            <option value="139">南大東島</option>
+            <option value="140">宮古島</option>
+            <option value="141">石垣島</option>
+            <option value="142">与那国島</option>
+          </optgroup>
+        </select>
+        <button id="btn-setting">設定変更</button>
+      </div>
     </div>
     
   ]]></Content>
