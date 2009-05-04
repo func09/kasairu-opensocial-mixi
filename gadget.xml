@@ -13,8 +13,8 @@
   -->
   <Content type="html" view="home"><![CDATA[
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-    <script type="text/javascript" src="kasairu.js?version=200905041402"></script>
-    <script type="text/javascript" src="home.js?version=200905041402"></script>
+    <script type="text/javascript" src="js/kasairu.js?version=200905041402"></script>
+    <script type="text/javascript" src="js/home.js?version=200905041402"></script>
     <h3>今日、傘いる？</h3>    
     <div id="box-result">
       <p id="result-yes" style="display:none;">はい！傘を持ってでかけましょう！（<span class="city-name">東京</span>）</p>
@@ -29,8 +29,8 @@
   -->
   <Content type="html" view="profile"><![CDATA[
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-    <script type="text/javascript" src="kasairu.js?version=200905041402"></script>
-    <script type="text/javascript" src="home.js?version=200905041402"></script>
+    <script type="text/javascript" src="js/kasairu.js?version=200905041402"></script>
+    <script type="text/javascript" src="js/home.js?version=200905041402"></script>
     <h3>今日、傘いる？</h3>    
     <div id="box-result">
       <p id="result-yes" style="display:none;">はい！傘を持ってでかけましょう！（<span class="city-name">東京</span>）</p>
@@ -48,8 +48,8 @@
       
     </style>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-    <script type="text/javascript" src="kasairu.js?version=200905041346"></script>
-    <script type="text/javascript" src="canvas.js?version=20090504134702"></script>
+    <script type="text/javascript" src="js/kasairu.js?version=200905041346"></script>
+    <script type="text/javascript" src="js/canvas.js?version=20090504134702"></script>
     
     <div id="flash-message"></div>
     
