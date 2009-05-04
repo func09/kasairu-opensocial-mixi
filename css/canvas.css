@@ -1,3 +1,13 @@
 body {
   padding: 10px;
+  size: 12px;
+}
+
+h3 {
+  margin: 0px 2px;
+  font-size: 14px;
+  color: #CC0033;
+}
+
+#box-result {
 }

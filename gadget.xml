@@ -8,35 +8,33 @@
   
   <!--
   ==============================================================================
-   Home View
+   Home View & Profile View
   ==============================================================================
   -->
-  <Content type="html" view="home"><![CDATA[
-    <link rel="stylesheet" href="css/home.css?version=200905041348" type="text/css" />
+  <Content type="html" view="home,profile"><![CDATA[
+    <link rel="stylesheet" href="css/canvas.css?version=200905042313" type="text/css" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
     <script type="text/javascript" src="js/kasairu.js?version=200905041402"></script>
     <script type="text/javascript" src="js/home.js?version=200905041402"></script>
-    <h3>今日、傘いる？</h3>    
+    
+    <h3><span class="city-name">**</span>は今日傘いる？</h3>
     <div id="box-result">
-      <p id="result-yes" style="display:none;">はい！傘を持ってでかけましょう！（<span class="city-name">東京</span>）</p>
-      <p id="result-no" style="display:none;">いいえ！傘は必要ないでしょう（<span class="city-name">東京</span>）</p>
-    </div>
-  ]]></Content>
-  
-  <!--
-  ==============================================================================
-   Profile View
-  ==============================================================================
-  -->
-  <Content type="html" view="profile"><![CDATA[
-    <link rel="stylesheet" href="css/home.css?version=200905041348" type="text/css" />
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-    <script type="text/javascript" src="js/kasairu.js?version=200905041402"></script>
-    <script type="text/javascript" src="js/home.js?version=200905041402"></script>
-    <h3>今日、傘いる？</h3>    
-    <div id="box-result">
-      <p id="result-yes" style="display:none;">はい！傘を持ってでかけましょう！（<span class="city-name">東京</span>）</p>
-      <p id="result-no" style="display:none;">いいえ！傘は必要ないでしょう（<span class="city-name">東京</span>）</p>
+      <div id="result-yes" style="display:none;">
+        <table>
+          <tr>
+            <td><img src="images/kasa_open.jpg" width="60" height="60" alt="rainy" /></td>
+            <td>はい！<br />傘を持ってでかけよう（<span class="city-name">東京</span>）</td>
+          </tr>
+        </table>
+      </div>
+      <div id="result-no" style="display:none;">
+        <table>
+          <tr>
+            <td><img src="images/kasa_close.jpg" width="60" height="60" alt="fine" /></td>
+            <td>いいえ！<br />傘は必要ないよ（<span class="city-name">東京</span>）</td>
+          </tr>
+        </table>
+      </div>
     </div>
   ]]></Content>
   
@@ -46,32 +44,38 @@
   ==============================================================================
   -->
   <Content type="html" view="canvas"><![CDATA[
-    <link rel="stylesheet" href="css/canvas.css?version=200905041348" type="text/css" />
+    <link rel="stylesheet" href="css/canvas.css?version=200905042320" type="text/css" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
     <script type="text/javascript" src="js/kasairu.js?version=200905041346"></script>
     <script type="text/javascript" src="js/canvas.js?version=20090504134702"></script>
     
     <div id="flash-message"></div>
     
-    <h3>今日傘いる？</h3>
+    <h3><span class="city-name">**</span>は今日傘いる？</h3>
     
     <div id="box-result">
       <div id="result-yes" style="display:none;">
-        <img src="images/kasa_open.jpg" width="60" height="60" alt="rainy" />
-        はい！<br />
-        傘を持ってでかけよう（<span class="city-name">東京</span>）
+        <table>
+          <tr>
+            <td><img src="images/kasa_open.jpg" width="60" height="60" alt="rainy" /></td>
+            <td>はい！<br />傘を持ってでかけよう</td>
+          </tr>
+        </table>
       </div>
       <div id="result-no" style="display:none;">
-        <img src="images/kasa_close.jpg" width="60" height="60" alt="fine" />
-        いいえ！<br />
-        傘は必要ないでしょう（<span class="city-name">東京</span>）
+        <table>
+          <tr>
+            <td><img src="images/kasa_close.jpg" width="60" height="60" alt="fine" /></td>
+            <td>いいえ！<br />傘は必要ないよ</td>
+          </tr>
+        </table>
       </div>
     </div>
     
     <div id="box-setting" style="">
       <p"><a id="toggle-setting-city" href="#">地域設定変更</a></p>
       <div id="box-setting-city" style="display:none;">
-        <h4>あなたの地域を設定してください。</h4>
+        <label>あなたの地域を設定してください。</label><br />
         <select id="city-select">
           <optgroup label="北海道">
             <option value="1">稚内</option>
