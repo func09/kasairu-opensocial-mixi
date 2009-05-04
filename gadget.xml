@@ -53,10 +53,19 @@
     
     <div id="flash-message"></div>
     
-    <h3>今日、傘いる？</h3>    
+    <h3>今日傘いる？</h3>
+    
     <div id="box-result">
-      <p id="result-yes" style="display:none;">はい！傘を持ってでかけましょう！（<span class="city-name">東京</span>）</p>
-      <p id="result-no" style="display:none;">いいえ！傘は必要ないでしょう（<span class="city-name">東京</span>）</p>
+      <div id="result-yes" style="display:none;">
+        <img src="images/kasa_open.jpg" width="60" height="60" alt="rainy" />
+        はい！<br />
+        傘を持ってでかけよう（<span class="city-name">東京</span>）
+      </div>
+      <div id="result-no" style="display:none;">
+        <img src="images/kasa_close.jpg" width="60" height="60" alt="fine" />
+        いいえ！<br />
+        傘は必要ないでしょう（<span class="city-name">東京</span>）
+      </div>
     </div>
     
     <div id="box-setting" style="">
